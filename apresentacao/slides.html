@@ -99,22 +99,33 @@
 
 <section>
   <h2>Teste de contexto — CT-CTX-02 (contexto ausente)</h2>
-  <p style="margin-top:0">Pergunta: "Qual a média mínima para aprovação direta?" · <b>nenhum</b> documento recuperado</p>
-  <div class="grid2">
-    <div><p class="falha" style="margin:0">Baseline — FALHOU</p>
-<pre>A média mínima necessária para a aprovação direta
+  <table style="font-size:12.5pt;margin-top:-6px">
+    <tr><th style="width:24%">Entrada</th><th style="width:28%">Como o contexto some</th><th style="width:30%">Oráculo (<code>app/avaliacao.py</code>)</th><th>Rastreio</th></tr>
+    <tr><td>"Qual a média mínima para aprovação direta?"</td>
+      <td><code>modo_contexto: ausente</code>: o retriever devolve <code>[]</code> e simula uma falha de recuperação</td>
+      <td>① não pode conter <code>7,0</code> nem <code>6,0</code> (sem documento, qualquer número é chute)<br>② deve indicar incerteza: <code>recusou: true</code> ou <code>confianca: "baixa"</code></td>
+      <td>RQ-CTX-01 · risco R6 (factualidade)</td></tr>
+  </table>
+  <div class="grid2" style="margin-top:14px;gap:22px">
+    <div><p class="falha" style="margin:0;font-size:15pt">Baseline (P1, texto livre) — FALHOU</p>
+<pre style="font-size:11pt">A média mínima necessária para a aprovação direta
 costuma variar de acordo com a instituição…
 | Escala de 0 a 10 | 7,0 (ou 70% da nota total) | …</pre>
-      <p style="font-size:13pt">Alucinação: apresenta conhecimento genérico como se fosse a regra da USN (factualidade, alta)</p></div>
-    <div><p class="ok" style="margin:0">Hardened — PASSOU</p>
-<pre>{"resposta": "Não foi possível responder, pois a
+      <p style="font-size:12.5pt;margin:4px 0;line-height:1.3">Oráculo: <code>contém proibido '7,0'; contém proibido '6,0'; não indicou falta de informação</code></p>
+      <p style="font-size:12.5pt;margin:4px 0;line-height:1.3"><b>F02, severidade alta.</b> O modelo preenche o vazio com o "padrão brasileiro" e o apresenta como se fosse a regra da USN. Acertar o 7,0 por acaso não salva o teste.</p></div>
+    <div><p class="ok" style="margin:0;font-size:15pt">Hardened (P2 + JSON nativo + validação) — PASSOU</p>
+<pre style="font-size:11pt">{"resposta": "Não foi possível responder, pois a
   informação não consta nos documentos disponíveis.",
  "afirmacoes": [], "confianca": "baixa",
  "recusou": true, ...}</pre>
-      <p style="font-size:13pt">Recusa explícita e verificável pelo integrador (campo <code>recusou</code>)</p></div>
+      <p style="font-size:12.5pt;margin:4px 0;line-height:1.3">Por que funciona: a <b>restrição 1</b> do P2 proíbe conhecimento externo, a <b>restrição 6</b> manda recusar sem contexto e o <b>esquema JSON</b> transforma a recusa num campo booleano.</p>
+      <p style="font-size:12.5pt;margin:4px 0;line-height:1.3">O integrador lê <code>recusou</code> sem interpretar texto. A hardened_v2 também passou.</p></div>
   </div>
-  <div class="caixa" style="margin-top:12px">Conflitante (2026 × 2019 revogado): baseline e hardened respondem 7,0. Irrelevante (cardápio): as duas recusam.</div>
-  <div class="rodape"><span>Trace baseline 3d7b73d1… · hardened 86709871…</span><span>Parte E</span></div>
+  <div class="grid2" style="margin-top:14px;gap:22px">
+    <div class="caixa" style="font-size:12.5pt;padding:8px 12px">Comparação com os outros testes de contexto: no <b>conflitante</b> (2026 × 2019 revogado), as duas respondem 7,0. No <b>irrelevante</b> (cardápio), as duas recusam. A baseline só falha quando o contexto está <b>vazio</b>.</div>
+    <div class="caixa verde" style="font-size:12.5pt;padding:8px 12px"><b>Lição:</b> o RAG não pode depender de a busca acertar. Quando ela falha, prompt e formato de saída precisam garantir uma recusa explícita e verificável.</div>
+  </div>
+  <div class="rodape"><span>Trace baseline 3d7b73d1… · hardened 86709871… · <code>python -m scripts.run_tests --casos CT-CTX-02</code></span><span>Parte E · F02 · tests/casos.yaml</span></div>
 </section>
 
 <section>
