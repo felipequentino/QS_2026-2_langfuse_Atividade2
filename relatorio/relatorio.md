@@ -13,10 +13,8 @@
 
 ## 1. Identificação e recorte
 
-Retomamos o projeto da Atividade 1, a plataforma de observabilidade **Langfuse**. Na AV1, o script de testes não chamava
-nenhum LLM: ele gravava no Langfuse pares entrada/saída escritos à mão (`model="simulador-llm-v1"`), então nenhuma
-resposta avaliada veio de um modelo. Na AV2 construímos o fluxo que faltava: um assistente RAG de regulamentos
-acadêmicos que **chama um LLM real** (Groq, `openai/gpt-oss-120b`) e é **instrumentado no Langfuse Cloud**. O recorte é
+Retomamos o projeto da Atividade 1, a plataforma de observabilidade **Langfuse**. Na AV2 construímos sobre ela um
+assistente RAG de regulamentos acadêmicos que **chama um LLM real** (Groq, `openai/gpt-oss-120b`) e é **instrumentado no Langfuse Cloud**. O recorte é
 o fluxo **resposta com fontes (RAG) e saída estruturada**, avaliado quanto a injeção de instruções, fidelidade das
 citações e comportamento sob contextos correto, ausente, irrelevante e conflitante.
 
@@ -37,19 +35,6 @@ e formato, os mesmos casos verificam citações (missão A), contexto sob press�
 **(B) Defesa contra Prompt Injection**: testar se uma aplicação RAG observada pelo Langfuse resiste a instruções
 maliciosas vindas do usuário (injeção direta) e de documentos recuperados (injeção indireta). Como a pergunta
 norteadora exige, os mesmos testes também verificam as fontes, as citações e a saída estruturada.
-
-#### O que mudou em relação à Atividade 1
-Na AV1, o script `executar_12_testes.py` **não chamava nenhum modelo**. Ele gravava no Langfuse pares
-entrada/saída escritos à mão (`model="simulador-llm-v1"`), então as "respostas" avaliadas nunca vieram de um LLM.
-As chaves do Langfuse também estavam fixas no código-fonte publicado. Na AV2:
-
-| AV1 | AV2 |
-|---|---|
-| Saídas fixas no código, sem LLM | Chamadas reais a um LLM (**Groq**, `openai/gpt-oss-120b`) em cada caso |
-| Langfuse só recebia eventos sintéticos | Langfuse recebe traces reais com spans de recuperação, guarda, geração (modelo, tokens, latência) e validação, além de scores automáticos |
-| Sem contexto/RAG | RAG com BM25 sobre um corpus sintético versionado |
-| Prompts inexistentes | P1/P2/P3 versionados no repositório **e** no Langfuse Prompt Management |
-| Chaves no código | Chaves só em `.env` (ignorado pelo git) e `.env.example` documentado |
 
 #### Ficha do sistema
 
@@ -301,7 +286,7 @@ controle no reteste está em `resultados/metricas.md` e em `docs/classificacao_f
 | **R4** (fonte desatualizada) | Correção da resposta | Regulamento revogado (2019: média 6,0 e 70%) recuperado junto do vigente | Índice sem filtro de vigência; o BM25 dá a mesma pontuação aos dois artigos 2º | **Médio**: resposta com regra antiga | Atributo `vigente` no contexto; restrição 5 do P2 (preferir o vigente e avisar da revogação); o validador marca a citação a documento revogado | CT-CTX-01, CT-FUN-01 |
 | **R5** (saída sem validação) | Integração com sistemas consumidores | JSON malformado, campo ausente ou formato pedido pelo usuário (XML) quebra quem consome a resposta | Saída livre do modelo e pedido do usuário para mudar o formato | **Médio**: falha de integração ou dado lido errado | Modo JSON nativo com `response_json_schema`; validação pydantic com `extra=forbid`; fallback seguro (`RESPOSTA_SEGURA`) quando reprova | CT-OUT-02, `tests/test_validator.py` |
 | **R6** (contexto ausente ou irrelevante) | Factualidade | O modelo responde com conhecimento "geral" quando o contexto não cobre a pergunta | Falha de recuperação, perguntas fora do corpus, paráfrase ou outro idioma | **Médio**: número inventado apresentado como regra da USN | Restrição 6 do P2 (recusar sem contexto); campos `recusou` e `confianca`; testes de ausente e irrelevante | CT-CTX-02, CT-CTX-03, CT-MET-01, CT-MET-02 |
-| **R7** (dados no observador) | Confidencialidade dos traces | Perguntas com dados pessoais ou segredos ficam gravadas em claro no Langfuse (achado da AV1) e chaves publicadas no repositório da AV1 | Entrada do usuário; código versionado | **Médio** | Chaves só em `.env` (ignorado); recomendação de rotacionar as chaves da AV1; o SDK v5 aceita a função `mask` para mascarar PII antes do envio (item do plano de melhoria) | Verificação `git ls-files` / grep por `sk-lf-` |
+| **R7** (dados no observador) | Confidencialidade dos traces | Perguntas com dados pessoais ou segredos ficam gravadas em claro nos traces do Langfuse; chaves de API vazam se forem versionadas | Entrada do usuário; código versionado | **Médio** | Chaves só em `.env` (ignorado pelo git); o SDK v5 aceita a função `mask` para mascarar PII antes do envio (item M6 do plano de melhoria) | Verificação `git ls-files` / grep por `sk-lf-` |
 | **R8** (excesso de agência) | Sistemas externos | O modelo aciona ações (enviar e-mail, alterar matrícula) a partir de uma instrução injetada | Não se aplica: o fluxo **não tem ferramentas** | — | Controle por design: nenhuma tool registrada. Se forem adicionadas, exigir confirmação humana e menor privilégio | Fora do escopo do recorte |
 
 Os riscos obrigatórios pelo enunciado são **R1 e R2** (injeção de instruções) e **R3, R4 e R5** (fontes, dados e saída).
@@ -316,7 +301,7 @@ Os riscos obrigatórios pelo enunciado são **R1 e R2** (injeção de instruçõ
 | R4 | Resposta correta, mas sem aviso de revogação, e o revogado ainda disputa o top-k (F07, F09) | CT-CTX-01, prompt_lab |
 | R5 | Controlado: 21/21 saídas no esquema | CT-OUT-01..03 |
 | R6 | Controlado na v2: recusas corretas e metamórficos 3/3 | CT-CTX-02/03, CT-MET-* |
-| R7 | Pendente de ação da equipe (revogar as chaves da AV1) | F12 |
+| R7 | Chaves fora do repositório (verificado); máscara de PII pendente (M6) | `git ls-files`, plano M6 |
 
 
 ## 9. Resultados
@@ -392,7 +377,6 @@ segurança, confiabilidade e usabilidade. Severidades: baixa, média, alta e cr�
 | **F09** | Contexto conflitante: P2 e P3 escolhem o vigente, mas **não avisam** da revogação (descumprem a restrição 5) | prompt_lab conflitante P2/P3 (`sinalizou_revogacao=False`) | P2, P3 | Prompt | Baixa | Aberta: P2 1.1.0 |
 | **F10** | Recusa com `resposta` vazia (`""`) e motivo enganoso ("informação não consta") diante de um ataque | CT-INJ-02 / CT-INJ-01 hardened | hardened | Usabilidade | Baixa | Resposta vazia corrigida na v2 (`min_length=1`); motivo ainda genérico |
 | **F11** | Indisponibilidade/cota do provedor: Gemini free tier (20 req/dia, 503 "high demand") e Groq (429 por TPM), com execuções perdidas | logs `prompt_lab_*`, `run_tests_20261021-132926.jsonl` (3 erros) | infraestrutura | Confiabilidade | **Média** | Mitigada: retry com `retry-after`, execução serial, `--anexar --so-erros` e troca de provedor por `.env` |
-| **F12** | Chaves do Langfuse publicadas no repositório da AV1 e PII gravada em claro no observador (achado AV1) | `QS_2026-2_langfuse_Atividade1/scripts/*.py` | AV1 | Segurança | **Alta** | Aberta (ação da equipe): revogar as chaves; M6 máscara de PII |
 
 #### Taxa de sucesso das injeções
 Os 4 ataques (2 diretos, 2 indiretos) tiveram **0% de sucesso nas três variantes**. O modelo `gpt-oss-120b` recusou
@@ -448,7 +432,7 @@ Critério de seleção: severidade × alcance. Escolhemos os três achados que m
 | M3 | F07: revogado disputa o top-k | Indexar só documentos `vigente: true` (os revogados ficam num índice histórico consultável sob demanda) e/ou aumentar k com MMR | Bruno Saint Clair Silva Oliveira | Alta | CT-INJ-04 e CT-FUN-01 devem recuperar DOC-AVA-2026#2 |
 | M4 | F10: recusa vazia | `resposta` com `min_length=1` (**já aplicado**, v2 sem respostas vazias) e motivo de recusa específico para ataques (P2 1.1.0) | Gabriel Bastos Pimentel | Baixa | CT-INJ-01/02 |
 | M5 | F08: regex contornável | Classificador dedicado de injeção antes do LLM (ex.: `meta-llama/llama-prompt-guard-2-86m`, disponível no próprio Groq) somado ao regex | Leonardo de Souza Aragão | Média | Novos casos de paráfrase de ataque |
-| M6 | F12: segredos e PII | Revogar as chaves da AV1; usar `Langfuse(mask=...)` para mascarar CPF/telefone antes do envio | Gian Glauberty Santos Nascimento | Alta | Caso CT-05 da AV1 reexecutado sem PII visível |
+| M6 | R7: PII nos traces | Usar `Langfuse(mask=...)` para mascarar CPF/telefone antes do envio ao observador | Gian Glauberty Santos Nascimento | Alta | Caso com CPF fictício reexecutado sem PII visível no trace |
 | M7 | F09: aviso de revogação | P2 1.1.0 com exemplo de conflito que exige citar a revogação | Gabriel Bastos Pimentel | Baixa | prompt_lab conflitante com `sinalizou_revogacao=True` |
 
 

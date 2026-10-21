@@ -5,19 +5,6 @@
 maliciosas vindas do usuário (injeção direta) e de documentos recuperados (injeção indireta). Como a pergunta
 norteadora exige, os mesmos testes também verificam as fontes, as citações e a saída estruturada.
 
-## O que mudou em relação à Atividade 1
-Na AV1, o script `executar_12_testes.py` **não chamava nenhum modelo**. Ele gravava no Langfuse pares
-entrada/saída escritos à mão (`model="simulador-llm-v1"`), então as "respostas" avaliadas nunca vieram de um LLM.
-As chaves do Langfuse também estavam fixas no código-fonte publicado. Na AV2:
-
-| AV1 | AV2 |
-|---|---|
-| Saídas fixas no código, sem LLM | Chamadas reais a um LLM (**Groq**, `openai/gpt-oss-120b`) em cada caso |
-| Langfuse só recebia eventos sintéticos | Langfuse recebe traces reais com spans de recuperação, guarda, geração (modelo, tokens, latência) e validação, além de scores automáticos |
-| Sem contexto/RAG | RAG com BM25 sobre um corpus sintético versionado |
-| Prompts inexistentes | P1/P2/P3 versionados no repositório **e** no Langfuse Prompt Management |
-| Chaves no código | Chaves só em `.env` (ignorado pelo git) e `.env.example` documentado |
-
 ## Ficha do sistema
 
 | Campo | Valor |

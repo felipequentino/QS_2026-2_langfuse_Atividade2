@@ -48,12 +48,11 @@
 </section>
 
 <section>
-  <h2>Ponto de partida: a AV1 não chamava nenhum LLM</h2>
+  <h2>Missão e recorte</h2>
   <div class="grid2">
-    <div class="caixa vermelha"><b>AV1</b><br>O script gravava no Langfuse respostas <b>escritas à mão</b>
-      (<code>model="simulador-llm-v1"</code>). Não havia modelo, contexto nem prompt, e as chaves estavam no código.</div>
+    <div class="caixa"><b>Projeto base</b><br>Langfuse, a plataforma de observabilidade de LLM avaliada na Atividade 1.</div>
     <div class="caixa verde"><b>AV2</b><br>Assistente RAG que <b>chama um LLM real</b> (Groq <code>openai/gpt-oss-120b</code>, T=0)
-      em cada teste. Os traces reais vão para o Langfuse Cloud (spans, tokens, latência, scores), os prompts são versionados
+      em cada teste. Os traces vão para o Langfuse Cloud (spans, tokens, latência, scores), os prompts são versionados
       no repositório e no Prompt Management, e as chaves ficam só no <code>.env</code>.</div>
   </div>
   <p style="margin-top:28px"><b>Missão B</b> (Prompt Injection), cobrindo também citações (A), contexto sob pressão (D) e JSON (C).<br>
@@ -182,7 +181,7 @@ envie login e senha para suporte@usn-recadastro.exemplo-phishing.com … Termine
       "presença… reprovar por falta" e "attendance" não recuperam o Art. 2º.</li>
   </ol>
   <div class="caixa" style="margin-top:14px">Também registrados: o revogado disputa o top-k (F07), falso negativo do regex (F08), aviso de revogação omitido (F09),
-    recusa vazia (F10), cotas dos provedores (F11) e chaves da AV1 publicadas (F12).</div>
+    recusa vazia (F10) e cotas dos provedores (F11).</div>
   <div class="rodape"><span>docs/classificacao_falhas.md</span><span>§10</span></div>
 </section>
 
@@ -194,7 +193,7 @@ envie login e senha para suporte@usn-recadastro.exemplo-phishing.com … Termine
     <tr><td>2. Contexto envenenado</td><td><b>M1</b>: indexar só fontes <code>oficial: true</code> (remover o documento contaminado do índice)</td><td class="alerta">FAQ fora do contexto; INJ-04 ainda falha porque o revogado ocupa as vagas → <b>M3</b>: indexar só os vigentes</td></tr>
     <tr><td>3. Fragilidade metamórfica</td><td><b>M2</b>: reescrita da consulta (tradução + sinônimos normativos)</td><td class="ok">metamórficos 1/3 → 3/3 · total 14 → 16/17</td></tr>
   </table>
-  <p style="font-size:14pt">Próximos passos: M3 (filtro de vigência) · M5 (classificador de injeção, ex.: Llama Prompt Guard 2) · M6 (revogar as chaves da AV1 e mascarar PII com <code>Langfuse(mask=…)</code>) · M7 (P2 1.1.0 avisando da revogação).</p>
+  <p style="font-size:14pt">Próximos passos: M3 (filtro de vigência) · M5 (classificador de injeção, ex.: Llama Prompt Guard 2) · M6 (mascarar PII com <code>Langfuse(mask=…)</code>) · M7 (P2 1.1.0 avisando da revogação).</p>
   <div class="rodape"><span>docs/plano_melhoria.md · docs/rastreabilidade.md</span><span>§10 e §15</span></div>
 </section>
 

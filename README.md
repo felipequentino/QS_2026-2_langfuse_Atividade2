@@ -8,10 +8,8 @@ João Felipe Quentino · João Victor Oliveira Moura · Leonardo de Souza Aragã
 
 ---
 
-## Por que esta versão existe
-A Atividade 1 **não fazia chamadas reais a um LLM**: o script gravava no Langfuse respostas escritas à mão
-(`model="simulador-llm-v1"`), e as chaves estavam no código. Nesta AV2 o repositório é uma aplicação RAG que
-**chama um LLM de verdade** (Groq, `openai/gpt-oss-120b`; Gemini opcional) em cada teste. Todas as execuções ficam rastreadas no **Langfuse Cloud**
+## Visão geral
+Nesta AV2 o repositório é uma aplicação RAG que **chama um LLM de verdade** (Groq, `openai/gpt-oss-120b`; Gemini opcional) em cada teste. Todas as execuções ficam rastreadas no **Langfuse Cloud**
 (trace → recuperação → guarda → geração com tokens e latência → validação → scores), o que torna as evidências
 reproduzíveis.
 
@@ -114,4 +112,3 @@ abrem para quem tem acesso ao projeto. Roteiro de capturas para `evidencias/`:
 
 ## Segurança do repositório
 - `.env` está no `.gitignore` e nenhuma chave é versionada. `.env.example` documenta as variáveis.
-- As chaves `pk-lf`/`sk-lf` publicadas no repositório da AV1 devem ser **revogadas** (achado R7).

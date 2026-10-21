@@ -12,10 +12,8 @@
 
 ## 1. Identificação e recorte
 
-Retomamos o projeto da Atividade 1, a plataforma de observabilidade **Langfuse**. Na AV1, o script de testes não chamava
-nenhum LLM: ele gravava no Langfuse pares entrada/saída escritos à mão (`model="simulador-llm-v1"`), então nenhuma
-resposta avaliada veio de um modelo. Na AV2 construímos o fluxo que faltava: um assistente RAG de regulamentos
-acadêmicos que **chama um LLM real** (Groq, `openai/gpt-oss-120b`) e é **instrumentado no Langfuse Cloud**. O recorte é
+Retomamos o projeto da Atividade 1, a plataforma de observabilidade **Langfuse**. Na AV2 construímos sobre ela um
+assistente RAG de regulamentos acadêmicos que **chama um LLM real** (Groq, `openai/gpt-oss-120b`) e é **instrumentado no Langfuse Cloud**. O recorte é
 o fluxo **resposta com fontes (RAG) e saída estruturada**, avaliado quanto a injeção de instruções, fidelidade das
 citações e comportamento sob contextos correto, ausente, irrelevante e conflitante.
 
