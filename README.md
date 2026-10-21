@@ -9,7 +9,7 @@ João Felipe Quentino · João Victor Oliveira Moura · Leonardo de Souza Aragã
 ---
 
 ## Visão geral
-Nesta AV2 o repositório é uma aplicação RAG que **chama um LLM de verdade** (Groq, `openai/gpt-oss-120b`; Gemini opcional) em cada teste. Todas as execuções ficam rastreadas no **Langfuse Cloud**
+Nesta AV2 o repositório é uma aplicação RAG que **chama um LLM** (Groq, `openai/gpt-oss-120b`; Gemini opcional) em cada teste. Todas as execuções ficam rastreadas no **Langfuse Cloud**
 (trace → recuperação → guarda → geração com tokens e latência → validação → scores), o que torna as evidências
 reproduzíveis.
 
