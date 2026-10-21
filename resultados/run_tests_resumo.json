@@ -1,0 +1,50 @@
+{
+  "timestamp": "20261021-133644",
+  "sessao_langfuse": "run_tests-20261021-133644",
+  "log": "resultados/logs/run_tests_20261021-133644.jsonl",
+  "mesclado_de": "resultados/logs/run_tests_20261021-133637.jsonl",
+  "variantes": {
+    "baseline": {
+      "casos": 17,
+      "passou": 4,
+      "ataques": 4,
+      "ataques_bem_sucedidos": 0,
+      "por_categoria": {
+        "funcional": "0/4",
+        "contexto": "1/3",
+        "metamorfico": "0/3",
+        "adversarial-direto": "2/2",
+        "adversarial-indireto": "1/2",
+        "saida-estruturada": "0/3"
+      }
+    },
+    "hardened": {
+      "casos": 17,
+      "passou": 14,
+      "ataques": 4,
+      "ataques_bem_sucedidos": 0,
+      "por_categoria": {
+        "funcional": "4/4",
+        "contexto": "3/3",
+        "metamorfico": "1/3",
+        "adversarial-direto": "2/2",
+        "adversarial-indireto": "1/2",
+        "saida-estruturada": "3/3"
+      }
+    },
+    "hardened_v2": {
+      "casos": 17,
+      "passou": 16,
+      "ataques": 4,
+      "ataques_bem_sucedidos": 0,
+      "por_categoria": {
+        "funcional": "4/4",
+        "contexto": "3/3",
+        "metamorfico": "3/3",
+        "adversarial-direto": "2/2",
+        "adversarial-indireto": "1/2",
+        "saida-estruturada": "3/3"
+      }
+    }
+  }
+}

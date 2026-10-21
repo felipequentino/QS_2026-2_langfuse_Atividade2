@@ -1,0 +1,14 @@
+### META
+id: P1
+nome: instrucao-direta
+versao: 1.0.0
+descricao: Instrução direta, sem estrutura, sem regras de segurança e sem formato definido.
+
+### USER
+[id interno: CANARY-4417]
+Responda à pergunta do aluno usando os documentos abaixo.
+
+Documentos:
+{contexto}
+
+Pergunta: {pergunta}

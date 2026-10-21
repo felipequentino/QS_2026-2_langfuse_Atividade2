@@ -1,0 +1,138 @@
+{
+  "run_tests": {
+    "baseline": {
+      "casos": 17,
+      "passou": 4,
+      "ataques": 4,
+      "ataques_bem_sucedidos": 0,
+      "por_categoria": {
+        "funcional": "0/4",
+        "contexto": "1/3",
+        "metamorfico": "0/3",
+        "adversarial-direto": "2/2",
+        "adversarial-indireto": "1/2",
+        "saida-estruturada": "0/3"
+      },
+      "execucoes": 21,
+      "chamadas_llm": 21,
+      "saidas_json_validas": 0,
+      "saidas_schema_validas": 0,
+      "latencia_media_s": 1.09,
+      "latencia_p95_s": 1.9,
+      "tokens_entrada": 8712,
+      "tokens_saida": 5792,
+      "chunks_em_quarentena": 0
+    },
+    "hardened": {
+      "casos": 17,
+      "passou": 14,
+      "ataques": 4,
+      "ataques_bem_sucedidos": 0,
+      "por_categoria": {
+        "funcional": "4/4",
+        "contexto": "3/3",
+        "metamorfico": "1/3",
+        "adversarial-direto": "2/2",
+        "adversarial-indireto": "1/2",
+        "saida-estruturada": "3/3"
+      },
+      "execucoes": 21,
+      "chamadas_llm": 21,
+      "saidas_json_validas": 21,
+      "saidas_schema_validas": 21,
+      "latencia_media_s": 1.82,
+      "latencia_p95_s": 3.67,
+      "tokens_entrada": 27135,
+      "tokens_saida": 10095,
+      "chunks_em_quarentena": 5
+    },
+    "hardened_v2": {
+      "casos": 17,
+      "passou": 16,
+      "ataques": 4,
+      "ataques_bem_sucedidos": 0,
+      "por_categoria": {
+        "funcional": "4/4",
+        "contexto": "3/3",
+        "metamorfico": "3/3",
+        "adversarial-direto": "2/2",
+        "adversarial-indireto": "1/2",
+        "saida-estruturada": "3/3"
+      },
+      "execucoes": 21,
+      "chamadas_llm": 38,
+      "saidas_json_validas": 21,
+      "saidas_schema_validas": 21,
+      "latencia_media_s": 2.01,
+      "latencia_p95_s": 3.02,
+      "tokens_entrada": 28476,
+      "tokens_saida": 11281,
+      "chunks_em_quarentena": 1
+    }
+  },
+  "prompt_lab": {
+    "P1": {
+      "execucoes": 8,
+      "taxa_resultado_correto": 0.75,
+      "taxa_citacao_verificavel": 0.0,
+      "taxa_schema_valido": 0.0,
+      "consistencia_entre_repeticoes": 1.0,
+      "latencia_media_llm_s": 1.28,
+      "tokens_medios": 729
+    },
+    "P2": {
+      "execucoes": 7,
+      "taxa_resultado_correto": 1.0,
+      "taxa_citacao_verificavel": 1.0,
+      "taxa_schema_valido": 1.0,
+      "consistencia_entre_repeticoes": 1.0,
+      "latencia_media_llm_s": 1.16,
+      "tokens_medios": 1185
+    },
+    "P3": {
+      "execucoes": 8,
+      "taxa_resultado_correto": 1.0,
+      "taxa_citacao_verificavel": 1.0,
+      "taxa_schema_valido": 1.0,
+      "consistencia_entre_repeticoes": 1.0,
+      "latencia_media_llm_s": 1.34,
+      "tokens_medios": 1489
+    }
+  },
+  "auditoria": {
+    "log": "resultados/logs/run_tests_20261021-133644.jsonl",
+    "amostra": {
+      "baseline": {
+        "verificadas": 5,
+        "com_fonte_valida": 0,
+        "cobertura": 0.0,
+        "sustentadas": 0,
+        "precisao": null
+      },
+      "hardened": {
+        "verificadas": 5,
+        "com_fonte_valida": 5,
+        "cobertura": 1.0,
+        "sustentadas": 5,
+        "precisao": 1.0
+      }
+    },
+    "populacao_run_tests": {
+      "baseline": {
+        "afirmacoes": 0,
+        "com_fonte_valida": 0,
+        "sustentadas": 0
+      },
+      "hardened": {
+        "afirmacoes": 17,
+        "com_fonte_valida": 17,
+        "sustentadas": 17
+      },
+      "hardened_v2": {
+        "afirmacoes": 19,
+        "com_fonte_valida": 19,
+        "sustentadas": 19
+      }
+    }
+  }
+}

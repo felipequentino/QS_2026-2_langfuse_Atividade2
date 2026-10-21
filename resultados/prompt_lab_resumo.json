@@ -1,0 +1,36 @@
+{
+  "timestamp": "20261021-134225",
+  "execucoes_com_erro": 1,
+  "sessao_langfuse": "prompt_lab-20261021-132701",
+  "log": "resultados/logs/prompt_lab_20261021-132701.jsonl",
+  "pergunta": "Qual a média mínima para aprovação direta e qual a frequência mínima exigida?",
+  "prompts": {
+    "P1": {
+      "execucoes": 8,
+      "taxa_resultado_correto": 0.75,
+      "taxa_citacao_verificavel": 0.0,
+      "taxa_schema_valido": 0.0,
+      "consistencia_entre_repeticoes": 1.0,
+      "latencia_media_llm_s": 1.28,
+      "tokens_medios": 729
+    },
+    "P2": {
+      "execucoes": 7,
+      "taxa_resultado_correto": 1.0,
+      "taxa_citacao_verificavel": 1.0,
+      "taxa_schema_valido": 1.0,
+      "consistencia_entre_repeticoes": 1.0,
+      "latencia_media_llm_s": 1.16,
+      "tokens_medios": 1185
+    },
+    "P3": {
+      "execucoes": 8,
+      "taxa_resultado_correto": 1.0,
+      "taxa_citacao_verificavel": 1.0,
+      "taxa_schema_valido": 1.0,
+      "consistencia_entre_repeticoes": 1.0,
+      "latencia_media_llm_s": 1.34,
+      "tokens_medios": 1489
+    }
+  }
+}

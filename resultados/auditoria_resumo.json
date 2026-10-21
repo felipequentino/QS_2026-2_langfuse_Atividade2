@@ -1,0 +1,36 @@
+{
+  "log": "resultados/logs/run_tests_20261021-133644.jsonl",
+  "amostra": {
+    "baseline": {
+      "verificadas": 5,
+      "com_fonte_valida": 0,
+      "cobertura": 0.0,
+      "sustentadas": 0,
+      "precisao": null
+    },
+    "hardened": {
+      "verificadas": 5,
+      "com_fonte_valida": 5,
+      "cobertura": 1.0,
+      "sustentadas": 5,
+      "precisao": 1.0
+    }
+  },
+  "populacao_run_tests": {
+    "baseline": {
+      "afirmacoes": 0,
+      "com_fonte_valida": 0,
+      "sustentadas": 0
+    },
+    "hardened": {
+      "afirmacoes": 17,
+      "com_fonte_valida": 17,
+      "sustentadas": 17
+    },
+    "hardened_v2": {
+      "afirmacoes": 19,
+      "com_fonte_valida": 19,
+      "sustentadas": 19
+    }
+  }
+}
