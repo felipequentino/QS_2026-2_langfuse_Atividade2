@@ -9,7 +9,7 @@
 | Missão | (B) Defesa contra Prompt Injection, com auditoria de citações, contexto e saída estruturada |
 | Repositório | https://github.com/felipequentino/QS_2026-2_langfuse_Atividade2 |
 | Data | 21/10/2026 |
-| Vídeo | ver seção 13 |
+| Vídeo | [Link](https://drive.google.com/file/d/1KplNWqdicWM3DjdkKL-QlKW-q0oNQ5nU/view?usp=drive_link) |
 
 ## 1. Identificação e recorte
 
