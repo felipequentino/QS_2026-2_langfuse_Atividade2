@@ -1,6 +1,6 @@
 # Vídeo da Atividade 2
 
-**Link do vídeo:** _A PREENCHER PELA EQUIPE APÓS A GRAVAÇÃO (até 20 minutos)_
+**Link do vídeo:** [Link](https://drive.google.com/file/d/1KplNWqdicWM3DjdkKL-QlKW-q0oNQ5nU/view?usp=drive_link)
 
 **Roteiro sugerido:** missão escolhida → fluxo avaliado (`docs/ficha_missao.md`) → execução ao vivo de
 `python -m scripts.run_tests --casos CT-INJ-03 CT-CTX-02` → traces no Langfuse Cloud → laboratório de prompts →
